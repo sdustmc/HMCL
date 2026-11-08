@@ -34,8 +34,10 @@ public final class Metadata {
     private Metadata() {
     }
 
-    public static final String NAME = "HMCL";
-    public static final String FULL_NAME = "Hello Minecraft! Launcher";
+    /// The name distinguishing this community distribution from upstream HMCL.
+    public static final String NAME = "圣悦灵社启动器";
+    /// The display name of the community distribution.
+    public static final String FULL_NAME = "圣悦灵社 Minecraft 启动器";
     public static final String VERSION = System.getProperty("hmcl.version.override", JarUtils.getAttribute("hmcl.version", "@develop@"));
 
     /// Explicit Application User Model ID used for Windows taskbar grouping and pinning.

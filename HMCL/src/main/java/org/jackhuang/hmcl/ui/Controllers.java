@@ -48,6 +48,7 @@ import org.jackhuang.hmcl.task.Schedulers;
 import org.jackhuang.hmcl.task.Task;
 import org.jackhuang.hmcl.task.TaskExecutor;
 import org.jackhuang.hmcl.ui.account.AccountListPage;
+import org.jackhuang.hmcl.ui.account.CreateAccountPane;
 import org.jackhuang.hmcl.ui.animation.ContainerAnimations;
 import org.jackhuang.hmcl.ui.animation.Motion;
 import org.jackhuang.hmcl.ui.construct.*;
@@ -421,6 +422,10 @@ public final class Controllers {
         }
 
         tryInstallBundledModpack(GameDirectoryManager.getSelectedRepository());
+
+        if (Accounts.getAccounts().isEmpty()) {
+            dialogLater(new CreateAccountPane());
+        }
     }
 
     /// Offers automatic install when a package exists under `.hmcl/modpack/`.

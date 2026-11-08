@@ -132,7 +132,11 @@ public final class MainPage extends StackPane implements DecoratorPage {
 
         setPadding(new Insets(20));
 
-        if (Metadata.isNightly() || (Metadata.isDev() && !Objects.equals(Metadata.VERSION, state().getShownTips().get(ANNOUNCEMENT)))) {
+        ClubPage clubPage = new ClubPage();
+        StackPane.setMargin(clubPage, new Insets(0, 0, 100, 0));
+        getChildren().add(clubPage);
+
+        if (Metadata.OFFICIAL_BUILD && (Metadata.isNightly() || (Metadata.isDev() && !Objects.equals(Metadata.VERSION, state().getShownTips().get(ANNOUNCEMENT))))) {
             String title;
             String content;
             if (Metadata.isNightly()) {

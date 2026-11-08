@@ -41,6 +41,9 @@ import java.util.Objects;
 @NotNullByDefault
 @JsonSerializable
 public final class AuthlibInjectorServerList extends ObservableSetting implements JsonSchemaSetting {
+    /// The community skin site's current Yggdrasil endpoint, discovered from its homepage header.
+    public static final String CLUB_SKIN_URL = "https://skin.sdustmc.cn/api/yggdrasil/";
+
     /// The LittleSkin Yggdrasil API endpoint bundled into newly created server lists.
     public static final String LITTLE_SKIN_URL = "https://littleskin.cn/api/yggdrasil/";
 
@@ -57,6 +60,7 @@ public final class AuthlibInjectorServerList extends ObservableSetting implement
     /// Creates the default authlib-injector server list for a newly created file.
     public static AuthlibInjectorServerList createDefault() {
         AuthlibInjectorServerList result = new AuthlibInjectorServerList();
+        result.getServers().add(new AuthlibInjectorServer(CLUB_SKIN_URL));
         result.addLittleSkinIfAbsent();
         return result;
     }

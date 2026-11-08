@@ -466,13 +466,22 @@ public final class Accounts {
                 Metadata.DEPENDENCIES_DIRECTORY.resolve("universal").resolve(authlibInjectorFileName));
     }
 
-    private static AuthlibInjectorServer getOrCreateAuthlibInjectorServer(String url) {
+    /// Returns the registered authentication server from the loaded settings, adding it when absent.
+    /// Newly added servers fetch their display metadata asynchronously.
+    public static AuthlibInjectorServer getOrCreateAuthlibInjectorServer(String url) {
         return getAuthlibInjectorServers().stream()
                 .filter(server -> url.equals(server.getUrl()))
                 .findFirst()
                 .orElseGet(() -> {
                     AuthlibInjectorServer server = new AuthlibInjectorServer(url);
                     getAuthlibInjectorServers().add(server);
+                    Schedulers.io().execute(() -> {
+                        try {
+                            server.fetchMetadataResponse();
+                        } catch (IOException e) {
+                            LOG.warning("Failed to fetch authentication server metadata: " + url, e);
+                        }
+                    });
                     return server;
                 });
     }

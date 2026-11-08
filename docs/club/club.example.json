@@ -1,0 +1,17 @@
+{
+  "catalogUrl": "",
+  "announcements": [
+    {
+      "title": "公告标题示例",
+      "content": "这里填写社团公告。\n支持换行，按列表顺序显示。"
+    }
+  ],
+  "servers": [
+    {
+      "id": "survival",
+      "name": "生存服（示例）",
+      "address": "mc.example.org:25565",
+      "manifestUrl": "https://downloads.example.org/packs/survival/server-manifest.json"
+    }
+  ]
+}

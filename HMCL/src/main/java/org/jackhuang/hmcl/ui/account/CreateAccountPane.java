@@ -47,6 +47,7 @@ import org.jackhuang.hmcl.auth.yggdrasil.GameProfile;
 import org.jackhuang.hmcl.auth.yggdrasil.YggdrasilService;
 import org.jackhuang.hmcl.game.TexturesLoader;
 import org.jackhuang.hmcl.setting.Accounts;
+import org.jackhuang.hmcl.setting.AuthlibInjectorServerList;
 import org.jackhuang.hmcl.task.Schedulers;
 import org.jackhuang.hmcl.task.Task;
 import org.jackhuang.hmcl.task.TaskExecutor;
@@ -90,8 +91,10 @@ public class CreateAccountPane extends JFXDialogLayout implements DialogAware {
 
     private TaskExecutor loginTask;
 
+    /// Opens the community skin site directly without requiring a dragged authentication link.
     public CreateAccountPane() {
-        this((AccountFactory<?>) null);
+        this(Accounts.getOrCreateAuthlibInjectorServer(AuthlibInjectorServerList.CLUB_SKIN_URL));
+        setHeading(new Label("圣悦灵社皮肤站登录"));
     }
 
     public CreateAccountPane(AccountFactory<?> factory) {

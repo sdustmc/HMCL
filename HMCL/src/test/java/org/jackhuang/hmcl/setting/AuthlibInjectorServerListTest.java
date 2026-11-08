@@ -28,13 +28,14 @@ import static org.junit.jupiter.api.Assertions.*;
 /// Tests for detached authlib-injector server lists.
 @NotNullByDefault
 public final class AuthlibInjectorServerListTest {
-    /// Tests that newly created server lists contain LittleSkin by default.
+    /// Tests that new workspaces prioritize the community skin site and retain LittleSkin.
     @Test
     public void defaultListContainsLittleSkin() {
         AuthlibInjectorServerList list = AuthlibInjectorServerList.createDefault();
 
-        assertEquals(1, list.getServers().size());
-        assertEquals(AuthlibInjectorServerList.LITTLE_SKIN_URL, list.getServers().get(0).getUrl());
+        assertEquals(2, list.getServers().size());
+        assertEquals(AuthlibInjectorServerList.CLUB_SKIN_URL, list.getServers().get(0).getUrl());
+        assertEquals(AuthlibInjectorServerList.LITTLE_SKIN_URL, list.getServers().get(1).getUrl());
     }
 
     /// Tests that server list serialization does not include derived metadata.

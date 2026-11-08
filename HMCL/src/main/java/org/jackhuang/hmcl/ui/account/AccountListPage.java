@@ -32,6 +32,7 @@ import javafx.scene.layout.VBox;
 import org.jackhuang.hmcl.auth.Account;
 import org.jackhuang.hmcl.auth.authlibinjector.AuthlibInjectorServer;
 import org.jackhuang.hmcl.setting.Accounts;
+import org.jackhuang.hmcl.setting.AuthlibInjectorServerList;
 import org.jackhuang.hmcl.setting.SettingsManager;
 import org.jackhuang.hmcl.ui.Controllers;
 import org.jackhuang.hmcl.ui.FXUtils;
@@ -119,6 +120,13 @@ public final class AccountListPage extends DecoratorAnimatedPage implements Deco
                     boxMethods.getStyleClass().add("advanced-list-box-content");
                     FXUtils.setLimitWidth(boxMethods, 200);
 
+                    AdvancedListItem clubItem = new AdvancedListItem();
+                    clubItem.getStyleClass().add("navigation-drawer-item");
+                    clubItem.setTitle("圣悦灵社皮肤站");
+                    clubItem.setSubtitle("社团默认登录");
+                    clubItem.setLeftIcon(SVG.DRESSER);
+                    clubItem.setOnAction(e -> Controllers.dialog(new CreateAccountPane()));
+
                     AdvancedListItem microsoftItem = new AdvancedListItem();
                     microsoftItem.getStyleClass().add("navigation-drawer-item");
                     microsoftItem.setTitle(i18n("account.methods.microsoft"));
@@ -144,7 +152,8 @@ public final class AccountListPage extends DecoratorAnimatedPage implements Deco
                     });
 
                     VBox boxAuthServers = new VBox();
-                    authServerItems = MappedObservableList.create(skinnable.authServersProperty(), server -> {
+                    authServerItems = MappedObservableList.create(skinnable.authServersProperty().filtered(
+                            server -> !AuthlibInjectorServerList.CLUB_SKIN_URL.equals(server.getUrl())), server -> {
                         AdvancedListItem item = new AdvancedListItem();
                         item.getStyleClass().add("navigation-drawer-item");
                         item.setLeftIcon(SVG.DRESSER);
@@ -183,18 +192,18 @@ public final class AccountListPage extends DecoratorAnimatedPage implements Deco
                         offlineItem.setDisable(true);
                         boxAuthServers.setDisable(true);
 
-                        boxMethods.getChildren().setAll(title, microsoftItem, wrapper);
+                        boxMethods.getChildren().setAll(title, clubItem, microsoftItem, wrapper);
 
                         holder = FXUtils.onWeakChange(RESTRICTED, value -> {
                             if (!value) {
                                 holder = null;
                                 offlineItem.setDisable(false);
                                 boxAuthServers.setDisable(false);
-                                boxMethods.getChildren().setAll(title, microsoftItem, offlineItem, boxAuthServers);
+                                boxMethods.getChildren().setAll(title, clubItem, microsoftItem, offlineItem, boxAuthServers);
                             }
                         });
                     } else {
-                        boxMethods.getChildren().setAll(title, microsoftItem, offlineItem, boxAuthServers);
+                        boxMethods.getChildren().setAll(title, clubItem, microsoftItem, offlineItem, boxAuthServers);
                     }
                 }
 
