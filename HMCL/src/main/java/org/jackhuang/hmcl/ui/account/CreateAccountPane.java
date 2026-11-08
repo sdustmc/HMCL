@@ -354,9 +354,12 @@ public class CreateAccountPane extends JFXDialogLayout implements DialogAware {
 
             int rowIndex = 0;
 
-            if (!IntegrityChecker.isOfficial() && !(factory instanceof OfflineAccountFactory)) {
-                HintPane hintPane = new HintPane(MessageDialogPane.MessageType.WARNING);
-                hintPane.setSegment(i18n("unofficial.hint"));
+            boolean clubSkinLogin = factory instanceof BoundAuthlibInjectorAccountFactory boundFactory
+                    && AuthlibInjectorServerList.CLUB_SKIN_URL.equals(boundFactory.getServer().getUrl());
+            if (clubSkinLogin || (!IntegrityChecker.isOfficial() && !(factory instanceof OfflineAccountFactory))) {
+                HintPane hintPane = new HintPane(clubSkinLogin
+                        ? MessageDialogPane.MessageType.INFO : MessageDialogPane.MessageType.WARNING);
+                hintPane.setSegment(i18n(clubSkinLogin ? "account.club.hint" : "unofficial.hint"));
                 GridPane.setColumnSpan(hintPane, 2);
                 add(hintPane, 0, rowIndex);
 
